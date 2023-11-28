@@ -23,6 +23,7 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_dct = {(-5, 0):pg.transform.rotozoom(kk_img, 0, 1), (-5, 5):pg.transform.rotozoom(kk_img, 45, 1), (0, 5):pg.transform.rotozoom(kk_img, 90, 1), (5, 5):pg.transform.rotozoom(kk_img, 135, 1), (5, 0):pg.transform.rotozoom(kk_img, 180, 1), (5, -5):pg.transform.rotozoom(kk_img, 225, 1), (0, -5):pg.transform.rotozoom(kk_img, 270, 1), (-5, -5):pg.transform.rotozoom(kk_img, 315, 1)}
     kk_img_rct = kk_img.get_rect()
     kk_img_rct.center = 900, 400
     enn = pg.Surface((20, 20))
@@ -51,8 +52,12 @@ def main():
         screen.blit(bg_img, [0, 0])
         kk_img_rct.move_ip(sum_move[0], sum_move[1]) 
         if screen_judg(kk_img_rct) != (True, True):
-            kk_img_rct.move_ip(-sum_move[0], -sum_move[1]) 
-        screen.blit(kk_img, kk_img_rct)
+            kk_img_rct.move_ip(-sum_move[0], -sum_move[1])
+        if sum_move == [0, 0]:
+            screen.blit(kk_img, kk_img_rct)
+        else:
+            screen.blit(kk_img_dct[tuple(sum_move)], kk_img_rct)
+            kk_img = kk_img_dct[tuple(sum_move)]
         width, height = screen_judg(enn_rct)
         if not width:
             vx *= -1
