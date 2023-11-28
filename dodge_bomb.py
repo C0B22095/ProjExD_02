@@ -1,5 +1,6 @@
 import sys
 import pygame as pg
+import random
 
 
 WIDTH, HEIGHT = 1600, 900
@@ -27,11 +28,17 @@ def main():
     kk_img_rct = kk_img.get_rect()
     kk_img_rct.center = 900, 400
     enn = pg.Surface((20, 20))
+    enn1 = pg.Surface((20, 20))
     enn.set_colorkey((0, 0, 0))
-    pg.draw.circle(enn, (255, 0, 0), (10, 10), 10)
+    enn1.set_colorkey((0, 0, 0))
+    pg.draw.circle(enn, (255, 0, 0), (10, 10), 10) 
+    pg.draw.circle(enn1, (0, 255, 0), (10, 10), 10)
     enn_rct = enn.get_rect()
     enn_rct.center = WIDTH/2, HEIGHT/2
+    enn1_rct = enn1.get_rect()
+    enn1_rct.center = WIDTH/2, HEIGHT/2
     vx, vy = 5, 5
+    vx1, vy1 = 10, 10
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -65,6 +72,14 @@ def main():
             vy *= -1
         enn_rct.move_ip(vx, vy)
         screen.blit(enn, enn_rct)
+        if tmr > 50*10:
+            width, height = screen_judg(enn1_rct)
+            if not width:
+                vx1 *= -1
+            if not height:
+                vy1 *= -1
+            enn1_rct.move_ip(vx1, vy1)
+            screen.blit(enn1, enn1_rct)
         pg.display.update()
         tmr += 1
         clock.tick(50)
